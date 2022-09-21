@@ -19,6 +19,7 @@ Mentor: doc. dr. sc. [Nikola Tanković](https://ntankovic.unipu.hr)
 One and only feature of this chatbot is to give an answer to the user query. A user query consists of a question and the process to which the question refers.
 
 The implementation includes 2 separated applications that communicate with each other to achieve the goal. When the user submits a query on the Streamlit applicaiton, the application sends a HTTP POST request to the Gradio application that then feeds the query to the machine learning module. Module output is then returned and Gradio applicaiton sends a response with the answer in the body of the response.
+
 <br />
 
 ## **:computer: How to run it on the local machine :computer:**

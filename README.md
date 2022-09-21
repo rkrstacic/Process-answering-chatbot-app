@@ -1,6 +1,8 @@
-<h1 align="center"><b>Process answering chatbot application</b></h1>
+<h1 align="center"><b>Process answering chatbot applications</b></h1>
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://huggingface.co/spaces/rkrstacic/Chatbot-integration-built-on-processes)
+Streamlit application available [here](https://huggingface.co/spaces/rkrstacic/Chatbot-integration-built-on-processes).
+
+Gradio application available [here](https://huggingface.co/spaces/rkrstacic/Software-module-for-answering-questions-on-processes).
 
 ## **:information_source: About :information_source:**
 
@@ -19,6 +21,28 @@ Mentor: doc. dr. sc. [Nikola Tanković](https://ntankovic.unipu.hr)
 One and only feature of this chatbot is to give an answer to the user query. A user query consists of a question and the process to which the question refers.
 
 The implementation includes 2 separated applications that communicate with each other to achieve the goal. When the user submits a query on the Streamlit applicaiton, the application sends a HTTP POST request to the Gradio application that then feeds the query to the machine learning module. Module output is then returned and Gradio applicaiton sends a response with the answer in the body of the response.
+
+These 2 apps communicate via Hugging Face Spaces (Gradio based) API `https://hf.space/embed/rkrstacic/Software-module-for-answering-questions-on-processes/+/api/predict`. It is a `HTTP POST` endpoint that accepts input payload: `"data": [question, process]` and returns object with `data` attribute with the list of 1 element, being the answer itself.
+
+The request is being handled as following:
+
+```py
+import requests
+import json
+
+url = 'https://hf.space/embed/rkrstacic/Software-module-for-answering-questions-on-processes/+/api/predict'
+
+
+def _query(payload):
+    data = json.dumps(payload)
+    response = requests.request("POST", url, data=data)
+    return json.loads(response.content.decode("utf-8"))
+
+
+def get_answer(question, process):
+    return _query({"data": [question, process]})["data"][0]
+
+```
 
 <br />
 
